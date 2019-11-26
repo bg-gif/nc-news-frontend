@@ -24,6 +24,9 @@ class Nav extends Component {
             </h4>
           );
         })}
+        <Link to="/users">
+          <h4>All Users</h4>
+        </Link>
       </nav>
     );
   }

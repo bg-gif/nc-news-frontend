@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header>
       <h1>
-        <Link to="/">Northcoders Reddit Ripoff!</Link>
+        <Link to="/">t'Reddit!</Link>
       </h1>
     </header>
   );

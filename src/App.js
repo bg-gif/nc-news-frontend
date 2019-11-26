@@ -5,6 +5,8 @@ import Nav from "./components/Nav";
 import { Router } from "@reach/router";
 import AllArticles from "./components/AllArticles";
 import ArticlePage from "./components/ArticlePage";
+import AllUsers from "./components/AllUsers";
+import UserPage from "./components/UserPage";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <AllArticles path="/" />
         <AllArticles path="/topics/:topic_slug" />
         <ArticlePage path="/articles/:article_id" />
+        <AllUsers path="/users" />
+        <UserPage path="/users/:username" />
       </Router>
     </div>
   );
