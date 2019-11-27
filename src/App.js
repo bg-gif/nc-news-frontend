@@ -9,6 +9,7 @@ import AllUsers from "./components/AllUsers";
 import UserPage from "./components/UserPage";
 import { UserProvider } from "./UserContext";
 import Login from "./components/Login";
+import { navigate } from "@reach/router";
 
 class App extends Component {
   state = { user: { name: "", loggedIn: false } };
@@ -16,8 +17,7 @@ class App extends Component {
     this.setState({ user: { name: value, loggedIn: true } });
   };
   logOut = () => {
-    this.setState({ user: { name: "", loggedIn: "false" } });
-    window.location.reload();
+    this.setState({ user: { name: "", loggedIn: false } });
   };
   render() {
     const { user } = this.state;
@@ -26,16 +26,14 @@ class App extends Component {
         <UserProvider value={user}>
           <Header logOut={this.logOut} />
           <Nav />
-          {!user.loggedIn && <Login path="/login" logIn={this.logIn} />}
-          {user.loggedIn && (
-            <Router>
-              <AllArticles path="/" />
-              <AllArticles path="/topics/:topic_slug" />
-              <ArticlePage path="/articles/:article_id" />
-              <AllUsers path="/users" />
-              <UserPage path="/users/:username" />
-            </Router>
-          )}
+          <Router>
+            <AllArticles path="/" />
+            <AllArticles path="/topics/:topic_slug" />
+            <ArticlePage path="/articles/:article_id" />
+            <AllUsers path="/users" />
+            <UserPage path="/users/:username" />
+            <Login path="/login" logIn={this.logIn} />
+          </Router>
         </UserProvider>
       </div>
     );

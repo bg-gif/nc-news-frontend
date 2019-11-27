@@ -9,7 +9,7 @@ class CommentCard extends Component {
 
   render() {
     if (this.state.deleted)
-      return <div className="deleted">Comment Deleted</div>;
+      return <div className="confirmation">Comment Deleted</div>;
     return (
       <div className="commentCard">
         <h5>User: {this.props.author}</h5>

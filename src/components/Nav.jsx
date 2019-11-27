@@ -4,15 +4,23 @@ import { Link } from "@reach/router";
 import AddTopic from "./AddTopic";
 
 class Nav extends Component {
-  state = { topics: [], toggle: false };
+  state = { topics: [], toggle: false, isLoading: true, err: "" };
   componentDidMount() {
     this.getTopics();
   }
 
   getTopics = () => {
-    api.fetchAllTopics().then(topics => {
-      this.setState({ topics });
-    });
+    api
+      .fetchAllTopics()
+      .then(topics => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(({ response }) => {
+        this.setState({
+          err: [response.data.msg, response.status],
+          isLoading: false
+        });
+      });
   };
   handleToggle = ({ target: { name } }) => {
     console.log(name);

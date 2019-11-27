@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
-import CommentCard from "./CommentCard";
+
 import Votes from "./Votes";
 import Loader from "./Loader";
-import AddComment from "./AddComment";
+
 import UserContext from "../UserContext";
+import ErrHandler from "./ErrHandler";
+import Comments from "./Comments";
 
 class ArticlePage extends Component {
   static contextType = UserContext;
@@ -12,47 +14,42 @@ class ArticlePage extends Component {
     article: [],
     comments: [],
     isLoading: true,
-    user: this.context.name,
-    deleted: false
+    deleted: false,
+    err: ""
   };
   componentDidMount() {
-    Promise.all([
-      api.fetchArticleById(this.props.article_id),
-      api.fetchCommentsByArticleId(this.props.article_id)
-    ]).then(response => {
-      this.setState({
-        article: response[0],
-        comments: response[1],
-        isLoading: false,
-        toggle: false
+    api
+      .fetchArticleById(this.props.article_id)
+      .then(article => {
+        this.setState({
+          article,
+          isLoading: false,
+          toggle: false
+        });
+      })
+      .catch(({ response }) => {
+        console.log(response);
+        this.setState({
+          err: [response.data.msg, response.status],
+          isLoading: false
+        });
       });
-    });
   }
-  handleToggle = event => {
-    this.setState(currentState => {
-      return { toggle: !currentState.toggle };
-    });
-  };
-  updateComments = comment => {
-    this.setState(currentState => {
-      return { comments: [comment, ...currentState.comments] };
-    });
-  };
+
   render() {
-    const { article, comments } = this.state;
-    if (this.state.isLoading) return <Loader />;
-    if (this.state.deleted)
-      return <div className="deleted">Article Deleted</div>;
+    const { article, isLoading, deleted, err } = this.state;
+    if (isLoading) return <Loader />;
+    if (deleted) return <div className="confirmation">Article Deleted</div>;
+    if (err) return <ErrHandler err={err} />;
     return (
       <article>
         <header>
           <h2>{article.title}</h2>
         </header>
         <p>{article.body}</p>
-        <Votes id={article.article_id} type="article" votes={article.votes} />
-        <button onClick={this.handleToggle}>Add Comment</button>
+        <Votes id={article.article_id} type="articles" votes={article.votes} />
 
-        {this.state.user === article.author && (
+        {this.context.name === article.author && (
           <button
             onClick={() => {
               api.delete("articles", article.article_id).then(() => {
@@ -63,17 +60,7 @@ class ArticlePage extends Component {
             Delete Article
           </button>
         )}
-
-        {this.state.toggle && (
-          <AddComment
-            user={this.props.user}
-            article_id={this.props.article_id}
-            updateComments={this.updateComments}
-          />
-        )}
-        {comments.map(comment => {
-          return <CommentCard key={comment.comment_id} {...comment} />;
-        })}
+        <Comments article_id={article.article_id} />
       </article>
     );
   }

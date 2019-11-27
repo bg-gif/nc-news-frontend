@@ -3,20 +3,21 @@ import * as api from "../utils/api";
 import UserContext from "../UserContext";
 import ErrHandler from "./ErrHandler";
 
-class AddComment extends Component {
+class AddUser extends Component {
   static contextType = UserContext;
-  state = { description: "", slug: "", err: "" };
+  state = { username: "", avatar_url: "", name: "", err: "" };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { description, slug } = this.state;
+    const { username, avatar_url, name } = this.state;
     api
-      .postTopic(slug, description)
-      .then(topic => {
-        this.props.updateTopic(topic);
-        this.setState({ body: "" });
+      .postUser(username, avatar_url, name)
+      .then(user => {
+        this.setState({ username: "", avatar_url: "", name: "" }, () => {
+          this.props.updateUsers(user);
+        });
       })
       .catch(({ response }) => {
         this.setState({
@@ -31,36 +32,52 @@ class AddComment extends Component {
     if (err) return <ErrHandler />;
     return (
       <div className="formContainer">
-        <h3>Add Comment</h3>
+        <h3>Add User</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-25">
-              <label>Topic:</label>
+              <label>Username:</label>
             </div>
             <div className="col-75">
               <textarea
-                name="topic_slug"
-                id="slug"
-                placeholder="Write your comment here..."
-                rows="7"
+                name="new_username"
+                id="username"
+                placeholder="Username"
                 onChange={this.handleChange}
-                value={this.state.body}
+                value={this.state.username}
+                rows="1"
                 required
               ></textarea>
             </div>
           </div>
           <div className="row">
             <div className="col-25">
-              <label>Description:</label>
+              <label>Avatar URL:</label>
             </div>
             <div className="col-75">
               <textarea
-                name="comment-description"
-                id="description"
-                placeholder="Write your comment here..."
-                rows="7"
+                name="avatar-url"
+                id="avatar_url"
+                placeholder="Avatar URL"
                 onChange={this.handleChange}
-                value={this.state.body}
+                value={this.state.avatar_url}
+                rows="1"
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-25">
+              <label>Name:</label>
+            </div>
+            <div className="col-75">
+              <textarea
+                name="real-name"
+                id="name"
+                placeholder="Name"
+                rows="1"
+                onChange={this.handleChange}
+                value={this.state.name}
                 required
               ></textarea>
             </div>
@@ -74,4 +91,4 @@ class AddComment extends Component {
   }
 }
 
-export default AddComment;
+export default AddUser;

@@ -101,3 +101,15 @@ exports.fetchAllUsers = () => {
       return users;
     });
 };
+
+exports.postUser = (username, avatar_url, name) => {
+  return axios
+    .post("https://ncdlc.herokuapp.com/api/users", {
+      username,
+      avatar_url,
+      name
+    })
+    .then(({ data: { user } }) => {
+      return user;
+    });
+};

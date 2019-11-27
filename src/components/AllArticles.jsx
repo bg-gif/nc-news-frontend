@@ -4,6 +4,7 @@ import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
 import AddArticle from "./AddArticle";
 import UserContext from "../UserContext";
+import ErrHandler from "./ErrHandler";
 
 class AllArticles extends Component {
   static contextType = UserContext;
@@ -12,7 +13,8 @@ class AllArticles extends Component {
     sort_by: "created_at",
     order: "desc",
     isLoading: true,
-    articleToggle: false
+    articleToggle: false,
+    err: ""
   };
   componentDidMount() {
     this.getArticles();
@@ -33,6 +35,12 @@ class AllArticles extends Component {
       )
       .then(articles => {
         this.setState({ articles, isLoading: false, user: this.context.name });
+      })
+      .catch(({ response }) => {
+        this.setState({
+          err: [response.data.msg, response.status],
+          isLoading: false
+        });
       });
   };
 
@@ -59,8 +67,9 @@ class AllArticles extends Component {
     });
   };
   render() {
-    const { articles, isLoading } = this.state;
+    const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
+    if (err) return <ErrHandler />;
     return (
       <div>
         <div className="options">
@@ -81,9 +90,11 @@ class AllArticles extends Component {
               <option value="asc">Ascending</option>{" "}
             </select>
           </div>
-          <button onClick={this.handleToggle} name="articleToggle">
-            Add Article
-          </button>
+          {this.context.name && (
+            <button onClick={this.handleToggle} name="articleToggle">
+              Add Article
+            </button>
+          )}
         </div>
         <main>
           {this.state.articleToggle && (

@@ -11,7 +11,12 @@ const Header = props => {
       </h1>
       {user.loggedIn && <p>Logged in as: {user.name}</p>}
       {!user.loggedIn && <p>Please Log In</p>}
-      <button onClick={props.logOut}>Change User</button>
+      {!user.loggedIn && (
+        <Link to="/login">
+          <button>Log In</button>
+        </Link>
+      )}
+      {user.loggedIn && <button onClick={props.logOut}>Log Out</button>}
     </header>
   );
 };
