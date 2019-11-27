@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
+import AddArticle from "./AddArticle";
+import UserContext from "../UserContext";
 
 class AllArticles extends Component {
+  static contextType = UserContext;
   state = {
     articles: [],
     sort_by: "created_at",
     order: "desc",
-    isLoading: true
+    isLoading: true,
+    toggle: false
   };
   componentDidMount() {
     this.getArticles();
@@ -28,7 +32,7 @@ class AllArticles extends Component {
         this.state.order
       )
       .then(articles => {
-        this.setState({ articles, isLoading: false });
+        this.setState({ articles, isLoading: false, user: this.context.name });
       });
   };
 
@@ -42,7 +46,18 @@ class AllArticles extends Component {
     const order = event.target.value;
     this.setState({ order });
   };
+  handleToggle = event => {
+    this.setState(currentState => {
+      return { toggle: !currentState.toggle };
+    });
+  };
+  updateArticles = article => {
+    this.setState(currentState => {
+      return { articles: [article, ...currentState.articles] };
+    });
+  };
   render() {
+    console.log(this.props, "props");
     const { articles, isLoading } = this.state;
     if (isLoading) return <Loader />;
     return (
@@ -65,8 +80,15 @@ class AllArticles extends Component {
               <option value="asc">Ascending</option>{" "}
             </select>
           </div>
+          <button onClick={this.handleToggle}>Add Article</button>
         </div>
         <main>
+          {this.state.toggle && (
+            <AddArticle
+              user={this.props.user}
+              updateArticles={this.updateArticles}
+            />
+          )}
           {articles.map(article => {
             return <ArticleCard key={article.article_id} {...article} />;
           })}

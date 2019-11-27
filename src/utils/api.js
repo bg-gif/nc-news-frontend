@@ -50,3 +50,27 @@ exports.changeVotes = (inc_votes, id, type) => {
     inc_votes
   });
 };
+
+exports.postArticle = (title, author, body, topic) => {
+  return axios
+    .post("https://ncdlc.herokuapp.com/api/articles", {
+      title,
+      topic,
+      author,
+      body
+    })
+    .then(({ data: { article } }) => {
+      return article;
+    });
+};
+
+exports.postComment = (article_id, username, body) => {
+  return axios
+    .post(`https://ncdlc.herokuapp.com/api/articles/${article_id}/comments`, {
+      username,
+      body
+    })
+    .then(({ data: { comment } }) => {
+      return comment;
+    });
+};

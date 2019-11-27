@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import UserCard from "./UserCard";
+import Loader from "./Loader";
 
 class AllUsers extends Component {
-  state = { users: [] };
+  state = { users: [], isLoading: true };
   componentDidMount() {
     api.fetchAllUsers().then(users => {
-      console.log(users);
-      this.setState({ users });
+      this.setState({ users, isLoading: false });
     });
   }
   render() {
     const { users } = this.state;
+    if (this.state.isLoading) return <Loader />;
     return (
       <div>
         {users.map(user => {
