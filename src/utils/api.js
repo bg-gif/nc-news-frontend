@@ -74,3 +74,30 @@ exports.postComment = (article_id, username, body) => {
       return comment;
     });
 };
+
+exports.delete = (type, id) => {
+  return axios
+    .delete(`https://ncdlc.herokuapp.com/api/${type}/${id}`)
+    .then(() => {
+      console.log("delete successful");
+    });
+};
+
+exports.updateTopic = (description, slug) => {
+  return axios
+    .post("https://ncdlc.herokuapp.com/api/topics", {
+      description,
+      slug
+    })
+    .then(topic => {
+      console.log(topic);
+    });
+};
+
+exports.fetchAllUsers = () => {
+  return axios
+    .get("https://ncdlc.herokuapp.com/api/users")
+    .then(({ data: { users } }) => {
+      return users;
+    });
+};

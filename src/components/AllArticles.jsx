@@ -12,7 +12,7 @@ class AllArticles extends Component {
     sort_by: "created_at",
     order: "desc",
     isLoading: true,
-    toggle: false
+    articleToggle: false
   };
   componentDidMount() {
     this.getArticles();
@@ -46,9 +46,11 @@ class AllArticles extends Component {
     const order = event.target.value;
     this.setState({ order });
   };
-  handleToggle = event => {
+  handleToggle = ({ target: { name } }) => {
+    console.log(name);
     this.setState(currentState => {
-      return { toggle: !currentState.toggle };
+      console.log(currentState[name]);
+      return { [name]: !currentState[name] };
     });
   };
   updateArticles = article => {
@@ -57,7 +59,6 @@ class AllArticles extends Component {
     });
   };
   render() {
-    console.log(this.props, "props");
     const { articles, isLoading } = this.state;
     if (isLoading) return <Loader />;
     return (
@@ -80,10 +81,12 @@ class AllArticles extends Component {
               <option value="asc">Ascending</option>{" "}
             </select>
           </div>
-          <button onClick={this.handleToggle}>Add Article</button>
+          <button onClick={this.handleToggle} name="articleToggle">
+            Add Article
+          </button>
         </div>
         <main>
-          {this.state.toggle && (
+          {this.state.articleToggle && (
             <AddArticle
               user={this.props.user}
               updateArticles={this.updateArticles}

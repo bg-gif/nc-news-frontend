@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import { Link } from "@reach/router";
+import AddTopic from "./AddTopic";
 
 class Nav extends Component {
-  state = { topics: [] };
+  state = { topics: [], toggle: false };
   componentDidMount() {
     this.getTopics();
   }
@@ -13,10 +14,28 @@ class Nav extends Component {
       this.setState({ topics });
     });
   };
+  handleToggle = ({ target: { name } }) => {
+    console.log(name);
+    this.setState(currentState => {
+      console.log(currentState[name]);
+      return { [name]: !currentState[name] };
+    });
+  };
+  updateTopics = topic => {
+    this.setState(currentState => {
+      return { topics: [topic, ...currentState.topics] };
+    });
+  };
   render() {
     const { topics } = this.state;
     return (
       <nav>
+        {this.state.articleToggle && (
+          <AddTopic
+            user={this.props.user}
+            updateArticles={this.updateArticles}
+          />
+        )}
         {topics.map(topic => {
           return (
             <h4 key={topic.slug}>
@@ -27,6 +46,9 @@ class Nav extends Component {
         <Link to="/users">
           <h4>All Users</h4>
         </Link>
+        <button onClick={this.handleToggle} name="topicToggle">
+          Add Topic
+        </button>
       </nav>
     );
   }

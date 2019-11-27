@@ -12,7 +12,8 @@ class ArticlePage extends Component {
     article: [],
     comments: [],
     isLoading: true,
-    user: this.context.name
+    user: this.context.name,
+    deleted: false
   };
   componentDidMount() {
     Promise.all([
@@ -40,6 +41,8 @@ class ArticlePage extends Component {
   render() {
     const { article, comments } = this.state;
     if (this.state.isLoading) return <Loader />;
+    if (this.state.deleted)
+      return <div className="deleted">Article Deleted</div>;
     return (
       <article>
         <header>
@@ -48,6 +51,19 @@ class ArticlePage extends Component {
         <p>{article.body}</p>
         <Votes id={article.article_id} type="article" votes={article.votes} />
         <button onClick={this.handleToggle}>Add Comment</button>
+
+        {this.state.user === article.author && (
+          <button
+            onClick={() => {
+              api.delete("articles", article.article_id).then(() => {
+                this.setState({ deleted: true });
+              });
+            }}
+          >
+            Delete Article
+          </button>
+        )}
+
         {this.state.toggle && (
           <AddComment
             user={this.props.user}

@@ -147,3 +147,17 @@ input[type="submit"] {
   display: table;
   clear: both;
 }
+
+.deleted {
+  height: 100px;
+  border: 2px solid blueviolet;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 5px;
+}
+
+button {
+  margin: 5px;
+}

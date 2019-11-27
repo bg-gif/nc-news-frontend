@@ -4,16 +4,15 @@ import UserContext from "../UserContext";
 
 class AddComment extends Component {
   static contextType = UserContext;
-  state = { body: "", user: this.context.name };
+  state = { description: "", slug: "" };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { body, user } = this.state;
-    const { article_id } = this.props;
-    api.postComment(article_id, user, body).then(comment => {
-      this.props.updateComments(comment);
+    const { description, slug } = this.state;
+    api.postTopic(slug, description).then(topic => {
+      this.props.updateTopic(topic);
       this.setState({ body: "" });
     });
   };
@@ -25,12 +24,28 @@ class AddComment extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-25">
-              <label>Comment:</label>
+              <label>Topic:</label>
             </div>
             <div className="col-75">
               <textarea
-                name="comment-body"
-                id="body"
+                name="topic_slug"
+                id="slug"
+                placeholder="Write your comment here..."
+                rows="7"
+                onChange={this.handleChange}
+                value={this.state.body}
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-25">
+              <label>Description:</label>
+            </div>
+            <div className="col-75">
+              <textarea
+                name="comment-description"
+                id="description"
                 placeholder="Write your comment here..."
                 rows="7"
                 onChange={this.handleChange}

@@ -8,23 +8,34 @@ import ArticlePage from "./components/ArticlePage";
 import AllUsers from "./components/AllUsers";
 import UserPage from "./components/UserPage";
 import { UserProvider } from "./UserContext";
+import Login from "./components/Login";
 
 class App extends Component {
-  state = { user: { name: "jessjelly", loggedIn: true } };
+  state = { user: { name: "", loggedIn: false } };
+  logIn = ({ target: { value } }) => {
+    this.setState({ user: { name: value, loggedIn: true } });
+  };
+  logOut = () => {
+    this.setState({ user: { name: "", loggedIn: "false" } });
+    window.location.reload();
+  };
   render() {
     const { user } = this.state;
     return (
       <div className="App">
         <UserProvider value={user}>
-          <Header />
+          <Header logOut={this.logOut} />
           <Nav />
-          <Router>
-            <AllArticles path="/" />
-            <AllArticles path="/topics/:topic_slug" />
-            <ArticlePage path="/articles/:article_id" />
-            <AllUsers path="/users" />
-            <UserPage path="/users/:username" />
-          </Router>
+          {!user.loggedIn && <Login path="/login" logIn={this.logIn} />}
+          {user.loggedIn && (
+            <Router>
+              <AllArticles path="/" />
+              <AllArticles path="/topics/:topic_slug" />
+              <ArticlePage path="/articles/:article_id" />
+              <AllUsers path="/users" />
+              <UserPage path="/users/:username" />
+            </Router>
+          )}
         </UserProvider>
       </div>
     );
