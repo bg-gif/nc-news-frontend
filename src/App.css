@@ -136,7 +136,25 @@ main {
   padding-left: 20px;
   grid-column: 1/1;
 }
+.usercard {
+  border: 2px solid black;
+  display: float;
+}
 
+.usercardData {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.usercardData img {
+  max-height: 150px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 10px;
+  float: right;
+}
 .votes {
   grid-column-start: 2;
   display: flex;

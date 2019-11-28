@@ -25,7 +25,7 @@ class AllUsers extends Component {
     if (isLoading) return <Loader />;
     if (err) return <ErrHandler />;
     return (
-      <div className="card">
+      <div className="usersContainer">
         {users.map(user => {
           return <UserCard {...user} key={user.username} />;
         })}
