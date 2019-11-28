@@ -47,8 +47,9 @@ class App extends Component {
       <div className="App">
         <UserProvider value={user}>
           <Header />
-          <UserBar logOut={this.logOut} />
           <Nav />
+          <UserBar logOut={this.logOut} />
+
           <Router>
             <AllArticles path="/" />
             <AllArticles path="/topics/:topic_slug" />

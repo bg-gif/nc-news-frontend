@@ -41,34 +41,40 @@ class Nav extends Component {
     console.log(this.context.name);
     return (
       <nav>
-        <div className="topics">
-          {this.state.articleToggle && (
-            <AddTopic
-              user={this.props.user}
-              updateArticles={this.updateArticles}
-            />
-          )}
-          {topics.map(topic => {
-            return (
-              <div className="topicItem" key={topic.slug}>
-                <p>
-                  <Link to={`/topics/${topic.slug}`}>{topic.slug}</Link>
-                </p>
-              </div>
-            );
-          })}
-          <div className="topicItem">
-            <Link to="/users">
-              <p>All Users</p>
-            </Link>
+        <div className="topics-container">
+          <div className="topics">
+            {this.state.articleToggle && (
+              <AddTopic
+                user={this.props.user}
+                updateArticles={this.updateArticles}
+              />
+            )}
+            {topics.map(topic => {
+              return (
+                <div className="topicItem" key={topic.slug}>
+                  <p>
+                    <Link to={`/topics/${topic.slug}`}>{topic.slug}</Link>
+                  </p>
+                </div>
+              );
+            })}
           </div>
-          {this.context.name && (
-            <div className="topicButton">
-              <button onClick={this.handleToggle} name="topicToggle">
-                Add Topic
-              </button>
+
+          <div className="topicRight">
+            <div className="topicItem">
+              <Link to="/users">
+                <p>All Users</p>
+              </Link>
             </div>
-          )}
+
+            <div className="topicButton">
+              {this.context.name && (
+                <button onClick={this.handleToggle} name="topicToggle">
+                  Add Topic
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </nav>
     );
