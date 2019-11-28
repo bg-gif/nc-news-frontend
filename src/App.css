@@ -57,6 +57,7 @@ nav {
   flex-wrap: wrap;
   flex-direction: row;
   background-color: #3b3a30;
+  position: sticky;
 }
 
 .topicItem {
@@ -206,14 +207,12 @@ textarea {
 }
 .custom-select {
   width: 75%;
-  float: right;
-  padding: 12px;
-  margin: 10px;
+  float: left;
   margin-top: 6px;
 }
 .custom-select select {
   width: 100%;
-  float: center;
+  float: left;
   padding: 12px;
 }
 
