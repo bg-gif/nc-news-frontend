@@ -33,7 +33,7 @@ class App extends Component {
         return {
           user: {
             name: localStorage.user,
-            loggedIn: JSON.parse(localStorage.loggedIn)
+            loggedIn: localStorage.loggedIn
           }
         };
       },

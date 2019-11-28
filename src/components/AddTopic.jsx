@@ -23,10 +23,10 @@ class AddComment extends Component {
       })
       .catch(({ response }) => {
         console.log(response);
-        // this.setState({
-        //   err: [response.data.msg, response.status],
-        //   isLoading: false
-        // });
+        this.setState({
+          err: [response.data.msg, response.status],
+          isLoading: false
+        });
       });
   };
 
