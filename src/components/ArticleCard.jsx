@@ -11,19 +11,19 @@ const ArticleCard = ({
   votes
 }) => {
   return (
-    <article>
+    <div className="card">
       <header>
         <h3>
           <Link to={`/articles/${article_id}`}>{title}</Link>
         </h3>
       </header>
-      <div className="articleData">
+      <div className="cardData">
         <p>Topic: {topic}</p>
         <p>Author: {author}</p>
-        <p>No. of Comments: {comment_count}</p>
-        <Votes type="articles" id={article_id} votes={votes} />
+        <p> Comments: {comment_count}</p>
       </div>
-    </article>
+      <Votes type="articles" id={article_id} votes={votes} />
+    </div>
   );
 };
 

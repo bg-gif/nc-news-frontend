@@ -1,22 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "@reach/router";
-import UserContext from "../UserContext";
 
 const Header = props => {
-  const user = useContext(UserContext);
   return (
     <header>
+      <img
+        src="https://northcoders.com/images/logos/learn_to_code_manchester_rw_second.png"
+        alt="Northcoders Logo"
+      />
       <h1>
-        <Link to="/">t'Reddit!</Link>
+        <Link to="/">Northcoders News</Link>
       </h1>
-      {user.loggedIn && <p>Logged in as: {user.name}</p>}
-      {!user.loggedIn && <p>Please Log In</p>}
-      {!user.loggedIn && (
-        <Link to="/login">
-          <button>Log In</button>
-        </Link>
-      )}
-      {user.loggedIn && <button onClick={props.logOut}>Log Out</button>}
     </header>
   );
 };

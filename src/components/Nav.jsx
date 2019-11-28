@@ -38,25 +38,33 @@ class Nav extends Component {
     const { topics } = this.state;
     return (
       <nav>
-        {this.state.articleToggle && (
-          <AddTopic
-            user={this.props.user}
-            updateArticles={this.updateArticles}
-          />
-        )}
-        {topics.map(topic => {
-          return (
-            <h4 key={topic.slug}>
-              <Link to={`/topics/${topic.slug}`}>{topic.slug}</Link>
-            </h4>
-          );
-        })}
-        <Link to="/users">
-          <h4>All Users</h4>
-        </Link>
-        <button onClick={this.handleToggle} name="topicToggle">
-          Add Topic
-        </button>
+        <div className="topics">
+          {this.state.articleToggle && (
+            <AddTopic
+              user={this.props.user}
+              updateArticles={this.updateArticles}
+            />
+          )}
+          {topics.map(topic => {
+            return (
+              <div className="topicItem" key={topic.slug}>
+                <p>
+                  <Link to={`/topics/${topic.slug}`}>{topic.slug}</Link>
+                </p>
+              </div>
+            );
+          })}
+          <div className="topicItem">
+            <Link to="/users">
+              <p>All Users</p>
+            </Link>
+          </div>
+          <div className="topicButton">
+            <button onClick={this.handleToggle} name="topicToggle">
+              Add Topic
+            </button>
+          </div>
+        </div>
       </nav>
     );
   }

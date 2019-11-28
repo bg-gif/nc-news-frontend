@@ -42,26 +42,34 @@ class ArticlePage extends Component {
     if (deleted) return <div className="confirmation">Article Deleted</div>;
     if (err) return <ErrHandler err={err} />;
     return (
-      <article>
-        <header>
-          <h2>{article.title}</h2>
-        </header>
-        <p>{article.body}</p>
-        <Votes id={article.article_id} type="articles" votes={article.votes} />
+      <main>
+        <div className="card">
+          <header>
+            <h2>{article.title}</h2>
+          </header>
+          <div className="cardData">
+            <p>{article.body}</p>
+            {this.context.name === article.author && (
+              <button
+                onClick={() => {
+                  api.delete("articles", article.article_id).then(() => {
+                    this.setState({ deleted: true });
+                  });
+                }}
+              >
+                Delete Article
+              </button>
+            )}
+          </div>
+          <Votes
+            id={article.article_id}
+            type="articles"
+            votes={article.votes}
+          />
+        </div>
 
-        {this.context.name === article.author && (
-          <button
-            onClick={() => {
-              api.delete("articles", article.article_id).then(() => {
-                this.setState({ deleted: true });
-              });
-            }}
-          >
-            Delete Article
-          </button>
-        )}
         <Comments article_id={article.article_id} />
-      </article>
+      </main>
     );
   }
 }

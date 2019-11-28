@@ -1,98 +1,173 @@
 .App {
+  min-height: 100%;
+  min-width: 320px;
   text-align: center;
   display: grid;
-  grid-template-rows: 100px 70px auto;
+  grid-template-rows: 100px 50px 70px auto;
+  font-size: 12px;
+  text-decoration: none;
+  background-color: #eaece5;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 50%;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+  color: black;
 }
 
 header {
-  border: 2px solid green;
   display: grid;
-  grid-template-columns: repeat(3 1fr);
+  margin: 5px;
+  grid-row: 1/1;
+  background-color: #b2c2bf;
+  color: white;
+  border-radius: 5px;
 }
 
-header p {
-  grid-column: 3/3;
+header img {
+  max-width: 150px;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+button {
+  border-radius: 5px;
 }
 
 nav {
-  border: 2px solid blue;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(4 1fr);
+  grid-template-rows: repeat(2 1fr);
   margin: 5px;
-  padding: 2px;
+  border-radius: 5px;
+}
+
+.topics {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: #3b3a30;
+}
+
+.topicItem {
+  border: 2px solid black;
+  background-color: #b2c2bf;
+  margin-left: 5px;
+  margin-right: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 5px;
+  grid: auto;
+}
+
+.topicButton {
+  display: flex;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  align-self: flex-end;
+  margin: 5px;
 }
 
 main {
-  border: 2px solid red;
   display: flex;
   flex-direction: column;
   margin: 5px;
-}
-
-article {
-  border: 2px solid purple;
-  margin: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-h4 {
-  text-align: center;
-}
-
-.articleData {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-}
-
-.commentCard {
-  border: 2px solid aqua;
-  margin: 5px;
-  width: 100%;
+  grid-row-start: 3;
 }
 
 .options {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-around;
-}
-
-.userCard {
-  border: 2px solid orange;
-  display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
-  padding: 10px;
-  margin: 5px;
-  width: 100%;
+  padding: 20px;
 }
 
-.userCard img {
-  height: 100px;
-  width: 100px;
+.userBar {
+  margin: 5px;
   border: 2px solid black;
+  display: float;
+  border-radius: 5px;
+  background-color: #b2c2bf;
+}
+
+.userBarData {
+  float: left;
+  padding-left: 15px;
+}
+
+.userBarButtons {
+  float: right;
+  padding-right: 15px;
+  padding-top: 7px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 7fr auto;
+  border: 2px solid black;
+  margin: 5px;
+  border-radius: 5px;
+}
+.card header {
+  grid-column: span 2;
+  margin: 0px;
+  border-radius: 0px;
+  font-stretch: wider;
+  padding: 0;
+}
+.cardData {
+  text-align: center;
+  padding-left: 20px;
+  grid-column: 1/1;
 }
 
 .votes {
+  grid-column-start: 2;
   display: flex;
-  flex-direction: row;
+  padding: 5px;
+  flex-direction: column;
   justify-content: center;
+  background-color: #c0ded9;
 }
 
-.votes img {
-  height: 20px;
-  width: 20px;
-  margin: 2px;
+.topics {
+  grid-row: 1/2;
 }
 
 .votes button {
+  height: 20px;
+  width: 20px;
   display: flex;
-  justify-content: space-evenly;
-  margin: 10px;
-  height: 30px;
-  width: 30px;
+  margin: 0px 2px 0px 2px;
+  justify-content: space-around;
+}
+
+button :disabled {
+  background-color: dimgrey;
+}
+.login {
+  height: 500px;
+  padding: 20px;
+  margin: 5px;
+}
+.login button {
+  margin-top: 10px;
 }
 
 button:disabled {
@@ -161,19 +236,12 @@ input[type="submit"] {
 }
 
 .confirmation {
-  height: 100px;
-  border: 2px solid blueviolet;
+  height: 50px;
+  border: 2px solid black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin: 5px;
-}
-
-button {
-  margin: 5px;
-}
-
-.errHandler {
-  border: 2px solid green;
+  font-size: 20px;
 }

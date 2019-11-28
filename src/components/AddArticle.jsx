@@ -8,11 +8,16 @@ class AddArticle extends Component {
   state = { title: "", topic: "", body: "", link: "", err: "", topics: [] };
   componentDidMount() {
     api.fetchAllTopics().then(topics => {
-      this.setState({ topics });
+      this.setState({ topics, topic: topics[0].slug }, () => {
+        console.log(this.state);
+      });
     });
   }
   handleChange = ({ target }) => {
-    this.setState({ [target.id]: target.value });
+    console.log(target.value);
+    this.setState({ [target.id]: target.value }, () => {
+      console.log(this.state);
+    });
   };
   handleSubmit = event => {
     event.preventDefault();
@@ -61,7 +66,7 @@ class AddArticle extends Component {
               <label>Topic:</label>
             </div>
             <div className="custom-select">
-              <select onChange={this.handleChange}>
+              <select onChange={this.handleChange} id="topic">
                 {topics.map(topic => {
                   return (
                     <option value={topic.slug} key={topic.slug}>

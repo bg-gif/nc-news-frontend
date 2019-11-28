@@ -34,7 +34,7 @@ class Votes extends Component {
         >
           ⇧
         </button>
-        <p>Votes: {this.props.votes + +this.state.optimisticVotes}</p>
+        <p>{this.props.votes + +this.state.optimisticVotes}</p>
         <button
           onClick={this.vote}
           disabled={this.state.optimisticVotes < 0}

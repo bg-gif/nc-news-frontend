@@ -14,7 +14,8 @@ class AllArticles extends Component {
     order: "desc",
     isLoading: true,
     articleToggle: false,
-    err: ""
+    err: "",
+    added: false
   };
   componentDidMount() {
     this.getArticles();
@@ -63,7 +64,11 @@ class AllArticles extends Component {
   };
   updateArticles = article => {
     this.setState(currentState => {
-      return { articles: [article, ...currentState.articles] };
+      return {
+        articles: [article, ...currentState.articles],
+        added: true,
+        articleToggle: false
+      };
     });
   };
   render() {
@@ -71,7 +76,7 @@ class AllArticles extends Component {
     if (isLoading) return <Loader />;
     if (err) return <ErrHandler />;
     return (
-      <div>
+      <main>
         <div className="options">
           <div className="sortby">
             Sort By:{"  "}
@@ -96,18 +101,21 @@ class AllArticles extends Component {
             </button>
           )}
         </div>
-        <main>
+        <div>
           {this.state.articleToggle && (
             <AddArticle
               user={this.props.user}
               updateArticles={this.updateArticles}
             />
           )}
+          {this.state.added && (
+            <div className="confirmation">Article Added</div>
+          )}
           {articles.map(article => {
             return <ArticleCard key={article.article_id} {...article} />;
           })}
-        </main>
-      </div>
+        </div>
+      </main>
     );
   }
 }

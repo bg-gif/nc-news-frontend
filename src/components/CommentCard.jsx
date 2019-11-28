@@ -11,26 +11,31 @@ class CommentCard extends Component {
     if (this.state.deleted)
       return <div className="confirmation">Comment Deleted</div>;
     return (
-      <div className="commentCard">
-        <h5>User: {this.props.author}</h5>
-        <p>Comment: {this.props.body}</p>
+      <div className="card">
+        <header>
+          <h5>{this.props.author}</h5>
+        </header>
+        <div className="cardData">
+          <p> {this.props.body}</p>
+
+          {this.context.name === this.props.author && (
+            <button
+              onClick={() => {
+                api.delete("comments", this.props.comment_id).then(() => {
+                  this.setState({ deleted: true });
+                });
+              }}
+            >
+              Delete Comment
+            </button>
+          )}
+        </div>
+
         <Votes
           id={this.props.comment_id}
           type="comments"
           votes={this.props.votes}
         />
-
-        {this.context.name === this.props.author && (
-          <button
-            onClick={() => {
-              api.delete("comments", this.props.comment_id).then(() => {
-                this.setState({ deleted: true });
-              });
-            }}
-          >
-            Delete Comment
-          </button>
-        )}
       </div>
     );
   }

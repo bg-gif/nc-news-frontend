@@ -9,7 +9,7 @@ import AllUsers from "./components/AllUsers";
 import UserPage from "./components/UserPage";
 import { UserProvider } from "./UserContext";
 import Login from "./components/Login";
-import { navigate } from "@reach/router";
+import UserBar from "./components/UserBar";
 
 class App extends Component {
   state = { user: { name: "", loggedIn: false } };
@@ -24,7 +24,8 @@ class App extends Component {
     return (
       <div className="App">
         <UserProvider value={user}>
-          <Header logOut={this.logOut} />
+          <Header />
+          <UserBar logOut={this.logOut} />
           <Nav />
           <Router>
             <AllArticles path="/" />

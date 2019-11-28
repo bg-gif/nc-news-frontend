@@ -49,31 +49,33 @@ class Login extends Component {
     if (err) return <ErrHandler />;
     return (
       <main>
-        <div>
-          <h2>Welcome to t'Reddit!</h2>
-          <h4>Please choose your log in</h4>
-          <select onChange={this.handleChange}>
-            {users.map(user => {
-              return (
-                <option value={user.username} key={user.username}>
-                  {user.username}
-                </option>
-              );
-            })}
-          </select>
+        <div className="login">
           <div>
-            <Link to="/">
-              <button onClick={this.props.logIn} value={user}>
-                Log In
-              </button>
-            </Link>
+            <h2>Welcome to t'Reddit!</h2>
+            <h4>Please choose your log in</h4>
+            <select onChange={this.handleChange}>
+              {users.map(user => {
+                return (
+                  <option value={user.username} key={user.username}>
+                    {user.username}
+                  </option>
+                );
+              })}
+            </select>
+            <div>
+              <Link to="/">
+                <button onClick={this.props.logIn} value={user}>
+                  Log In
+                </button>
+              </Link>
+            </div>
+            <div>
+              <button onClick={this.handleClick}>Add User</button>
+            </div>
           </div>
-          <div>
-            <button onClick={this.handleClick}>Add User</button>
-          </div>
+          {this.state.toggle && <AddUser updateUsers={this.updateUsers} />}
+          {this.state.added && <div className="confirmation">User Added</div>}
         </div>
-        {this.state.toggle && <AddUser updateUsers={this.updateUsers} />}
-        {this.state.added && <div className="confirmation">User Added</div>}
       </main>
     );
   }
