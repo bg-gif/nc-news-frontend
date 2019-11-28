@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import Votes from "./Votes";
+import UserContext from "../UserContext";
 
 const ArticleCard = ({
   article_id,
@@ -10,6 +11,7 @@ const ArticleCard = ({
   comment_count,
   votes
 }) => {
+  const user = useContext(UserContext);
   return (
     <div className="card">
       <header>
@@ -22,7 +24,8 @@ const ArticleCard = ({
         <p>Author: {author}</p>
         <p> Comments: {comment_count}</p>
       </div>
-      <Votes type="articles" id={article_id} votes={votes} />
+      {user.loggedIn && <Votes type="articles" id={article_id} votes={votes} />}
+      {!user.loggedIn && <div className="votes">Votes: {votes}</div>}
     </div>
   );
 };

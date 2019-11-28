@@ -14,11 +14,33 @@ import UserBar from "./components/UserBar";
 class App extends Component {
   state = { user: { name: "", loggedIn: false } };
   logIn = ({ target: { value } }) => {
-    this.setState({ user: { name: value, loggedIn: true } });
+    this.setState({ user: { name: value, loggedIn: true } }, () => {
+      localStorage.setItem("user", this.state.user.name);
+      localStorage.setItem("loggedIn", this.state.user.loggedIn);
+    });
   };
   logOut = () => {
-    this.setState({ user: { name: "", loggedIn: false } });
+    this.setState({ user: { name: "", loggedIn: false } }, () => {
+      localStorage.setItem("user", this.state.user.name);
+      localStorage.setItem("loggedIn", this.state.user.loggedIn);
+    });
   };
+  componentDidMount() {
+    console.log(Boolean(localStorage.loggedIn));
+    this.setState(
+      () => {
+        return {
+          user: {
+            name: localStorage.user,
+            loggedIn: JSON.parse(localStorage.loggedIn)
+          }
+        };
+      },
+      () => {
+        console.log(this.state);
+      }
+    );
+  }
   render() {
     const { user } = this.state;
     return (

@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import { Link } from "@reach/router";
 import AddTopic from "./AddTopic";
+import UserContext from "../UserContext";
 
 class Nav extends Component {
+  static contextType = UserContext;
   state = { topics: [], toggle: false, isLoading: true, err: "" };
   componentDidMount() {
     this.getTopics();
@@ -36,6 +38,7 @@ class Nav extends Component {
   };
   render() {
     const { topics } = this.state;
+    console.log(this.context.name);
     return (
       <nav>
         <div className="topics">

@@ -99,6 +99,12 @@ main {
   padding: 20px;
 }
 
+.options button {
+  display: flex;
+  flex-direction: row;
+  min-width: 70px;
+}
+
 .userBar {
   margin: 5px;
   border: 2px solid black;
