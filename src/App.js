@@ -21,7 +21,7 @@ class App extends Component {
     });
   };
   logOut = () => {
-    this.setState({ user: { name: "", loggedIn: false } }, () => {
+    this.setState({ user: { name: "", loggedIn: "" } }, () => {
       localStorage.setItem("user", this.state.user.name);
       localStorage.setItem("loggedIn", this.state.user.loggedIn);
     });
@@ -33,7 +33,7 @@ class App extends Component {
         return {
           user: {
             name: localStorage.user,
-            loggedIn: localStorage.loggedIn
+            loggedIn: Boolean(localStorage.loggedIn)
           }
         };
       },
