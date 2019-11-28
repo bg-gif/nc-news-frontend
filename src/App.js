@@ -10,6 +10,7 @@ import UserPage from "./components/UserPage";
 import { UserProvider } from "./UserContext";
 import Login from "./components/Login";
 import UserBar from "./components/UserBar";
+import AllTopics from "./components/AllTopics";
 
 class App extends Component {
   state = { user: { name: "", loggedIn: false } };
@@ -49,7 +50,6 @@ class App extends Component {
           <Header />
           <Nav />
           <UserBar logOut={this.logOut} />
-
           <Router>
             <AllArticles path="/" />
             <AllArticles path="/topics/:topic_slug" />
@@ -57,6 +57,7 @@ class App extends Component {
             <AllUsers path="/users" />
             <UserPage path="/users/:username" />
             <Login path="/login" logIn={this.logIn} />
+            <AllTopics path="/topics" />
           </Router>
         </UserProvider>
       </div>

@@ -108,6 +108,7 @@ main {
   width: fit-content;
   flex-direction: row;
   justify-content: flex-end;
+  margin-right: 5px;
 }
 .topicButton {
   padding-top: 12px;

@@ -7,7 +7,9 @@ class AddComment extends Component {
   static contextType = UserContext;
   state = { description: "", slug: "", err: "" };
   handleChange = ({ target }) => {
-    this.setState({ [target.id]: target.value });
+    this.setState({ [target.id]: target.value }, () => {
+      console.log(this.state);
+    });
   };
   handleSubmit = event => {
     event.preventDefault();
@@ -15,14 +17,16 @@ class AddComment extends Component {
     api
       .postTopic(slug, description)
       .then(topic => {
-        this.props.updateTopic(topic);
-        this.setState({ body: "" });
+        this.setState({ description: "", slug: "" }, () => {
+          this.props.updateTopics(topic);
+        });
       })
       .catch(({ response }) => {
-        this.setState({
-          err: [response.data.msg, response.status],
-          isLoading: false
-        });
+        console.log(response);
+        // this.setState({
+        //   err: [response.data.msg, response.status],
+        //   isLoading: false
+        // });
       });
   };
 
@@ -31,7 +35,7 @@ class AddComment extends Component {
     if (err) return <ErrHandler />;
     return (
       <div className="formContainer">
-        <h3>Add Comment</h3>
+        <h3>Add Topic</h3>
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-25">
@@ -41,10 +45,9 @@ class AddComment extends Component {
               <textarea
                 name="topic_slug"
                 id="slug"
-                placeholder="Write your comment here..."
-                rows="7"
+                placeholder="Topic Name"
                 onChange={this.handleChange}
-                value={this.state.body}
+                value={this.state.slug}
                 required
               ></textarea>
             </div>
@@ -57,10 +60,9 @@ class AddComment extends Component {
               <textarea
                 name="comment-description"
                 id="description"
-                placeholder="Write your comment here..."
-                rows="7"
+                placeholder="Topic Description"
                 onChange={this.handleChange}
-                value={this.state.body}
+                value={this.state.description}
                 required
               ></textarea>
             </div>

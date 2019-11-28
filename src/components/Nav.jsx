@@ -10,6 +10,11 @@ class Nav extends Component {
   componentDidMount() {
     this.getTopics();
   }
+  topicUpdate = topic => {
+    this.setState(currentState => {
+      return { topics: [topic, ...currentState.topics] };
+    });
+  };
 
   getTopics = () => {
     api
@@ -25,10 +30,8 @@ class Nav extends Component {
       });
   };
   handleToggle = ({ target: { name } }) => {
-    console.log(name);
     this.setState(currentState => {
-      console.log(currentState[name]);
-      return { [name]: !currentState[name] };
+      return { toggle: !currentState.toggle };
     });
   };
   updateTopics = topic => {
@@ -37,8 +40,7 @@ class Nav extends Component {
     });
   };
   render() {
-    const { topics } = this.state;
-    console.log(this.context.name);
+    const { topics, toggle } = this.state;
     return (
       <nav>
         <div className="topics-container">
@@ -59,23 +61,25 @@ class Nav extends Component {
               );
             })}
           </div>
-
           <div className="topicRight">
             <div className="topicItem">
               <Link to="/users">
                 <p>All Users</p>
               </Link>
             </div>
-
-            <div className="topicButton">
+            <div className="topicItem">
+              <Link to="/topics">
+                <p>All Topics</p>
+              </Link>
+            </div>
+            <div className="topicItem">
               {this.context.name && (
-                <button onClick={this.handleToggle} name="topicToggle">
-                  Add Topic
-                </button>
+                <p onClick={this.handleToggle}>Add Topic</p>
               )}
             </div>
           </div>
         </div>
+        {toggle && <AddTopic updateTopics={this.updateTopics} />}
       </nav>
     );
   }

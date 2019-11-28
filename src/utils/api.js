@@ -113,3 +113,14 @@ exports.postUser = (username, avatar_url, name) => {
       return user;
     });
 };
+
+exports.postTopic = (slug, description) => {
+  return axios
+    .post("https://ncdlc.herokuapp.com/api/topics", {
+      slug,
+      description
+    })
+    .then(({ data }) => {
+      return data.topic;
+    });
+};
