@@ -29,11 +29,11 @@ class AllArticles extends Component {
 
   getArticles = () => {
     api
-      .fetchAllArticles(
-        this.props.topic_slug,
-        this.state.sort_by,
-        this.state.order
-      )
+      .fetchAllArticles({
+        topic: this.props.topic_slug,
+        sort_by: this.state.sort_by,
+        order: this.state.order
+      })
       .then(articles => {
         this.setState({ articles, isLoading: false, user: this.context.name });
       })

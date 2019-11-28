@@ -51,7 +51,7 @@ class Login extends Component {
       <main>
         <div className="login">
           <div>
-            <h2>Welcome to t'Reddit!</h2>
+            <h2>Welcome to Northcoders News!</h2>
             <h4>Please choose your log in</h4>
             <select onChange={this.handleChange}>
               {users.map(user => {

@@ -78,6 +78,10 @@ main {
   padding-left: 15px;
 }
 
+.userBarButtons {
+  padding: 5px;
+}
+
 .topics-container {
   background-color: #3b3a30;
   display: flex;

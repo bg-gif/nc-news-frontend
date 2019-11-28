@@ -72,11 +72,11 @@ class Nav extends Component {
                 <p>All Topics</p>
               </Link>
             </div>
-            <div className="topicItem">
-              {this.context.name && (
+            {this.context.name && (
+              <div className="topicItem">
                 <p onClick={this.handleToggle}>Add Topic</p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
         {toggle && <AddTopic updateTopics={this.updateTopics} />}

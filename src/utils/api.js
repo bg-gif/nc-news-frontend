@@ -1,10 +1,10 @@
 const axios = require("axios");
 
-exports.fetchAllArticles = (topic, sort_by, order) => {
-  console.log(topic);
+exports.fetchAllArticles = ({ topic, sort_by, order, author }) => {
+  console.log(author);
   return axios
     .get("https://ncdlc.herokuapp.com/api/articles", {
-      params: { topic, sort_by, order }
+      params: { topic, sort_by, order, author }
     })
     .then(({ data: { articles } }) => {
       return articles;
@@ -32,16 +32,6 @@ exports.fetchCommentsByArticleId = article_id => {
     .get(`https://ncdlc.herokuapp.com/api/articles/${article_id}/comments`)
     .then(({ data: { comments } }) => {
       return comments;
-    });
-};
-
-exports.fetchAllUsers = users => {
-  return axios
-    .get(`https://ncdlc.herokuapp.com/api/users`, {
-      params: { users }
-    })
-    .then(({ data: { users } }) => {
-      return users;
     });
 };
 
@@ -122,5 +112,13 @@ exports.postTopic = (slug, description) => {
     })
     .then(({ data }) => {
       return data.topic;
+    });
+};
+
+exports.fetchUserByUserName = username => {
+  return axios
+    .get(`https://ncdlc.herokuapp.com/api/users/${username}`)
+    .then(({ data: { user } }) => {
+      return user;
     });
 };

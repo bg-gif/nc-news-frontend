@@ -16,6 +16,11 @@ const UserBar = props => {
             <button>Log In</button>
           </Link>
         )}
+        {user.loggedIn && (
+          <Link to={`/users/${user.name}`}>
+            <button>My User Page</button>
+          </Link>
+        )}
         {user.loggedIn && <button onClick={props.logOut}>Log Out</button>}
       </div>
     </div>

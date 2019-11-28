@@ -7,11 +7,13 @@ const UserCard = ({ username, avatar_url, name }) => {
     <div className="usercard">
       <header>
         <h2>
-          <Link to={`/users/${username}`}>{username}</Link>
+          <Link to={`/users/${username}`} state={{ username }}>
+            {username}
+          </Link>
         </h2>
       </header>
       <div className="usercardData">
-        <h4>{name}</h4>
+        <h1>{name}</h1>
         {avatar_url && <img src={avatar_url} alt="avatar" />}
       </div>
     </div>
