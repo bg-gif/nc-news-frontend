@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import AddTopic from "./AddTopic";
 import UserContext from "../UserContext";
 
@@ -36,8 +36,13 @@ class Nav extends Component {
   };
   updateTopics = topic => {
     this.setState(currentState => {
-      return { topics: [topic, ...currentState.topics] };
+      return {
+        topics: [topic, ...currentState.topics]
+      };
     });
+  };
+  handleLink = event => {
+    navigate(`/topics/${event.target.value}`);
   };
   render() {
     const { topics, toggle } = this.state;
@@ -51,15 +56,22 @@ class Nav extends Component {
                 updateArticles={this.updateArticles}
               />
             )}
-            {topics.map(topic => {
-              return (
-                <div className="topicItem" key={topic.slug}>
-                  <p>
-                    <Link to={`/topics/${topic.slug}`}>{topic.slug}</Link>
-                  </p>
-                </div>
-              );
-            })}
+            <select onClick={this.handleLink}>
+              <option defaultValue disabled>
+                Choose Topic
+              </option>
+              {topics.map(topic => {
+                return (
+                  <option
+                    onClick={this.handleLink}
+                    key={topic.slug}
+                    value={topic.slug}
+                  >
+                    {topic.slug}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div className="topicRight">
             <div className="topicItem">

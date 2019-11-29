@@ -54,7 +54,13 @@ class Comments extends Component {
         )}
         {this.state.added && <div className="confirmation">Comment Added</div>}
         {comments.map(comment => {
-          return <CommentCard key={comment.comment_id} {...comment} />;
+          return (
+            <CommentCard
+              key={comment.comment_id}
+              {...comment}
+              article_id={this.props.article_id}
+            />
+          );
         })}
       </section>
     );

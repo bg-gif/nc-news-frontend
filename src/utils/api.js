@@ -1,7 +1,6 @@
 const axios = require("axios");
 
 exports.fetchAllArticles = ({ topic, sort_by, order, author }) => {
-  console.log(author);
   return axios
     .get("https://ncdlc.herokuapp.com/api/articles", {
       params: { topic, sort_by, order, author }
@@ -35,10 +34,15 @@ exports.fetchCommentsByArticleId = article_id => {
     });
 };
 
-exports.changeVotes = (inc_votes, id, type) => {
-  return axios.patch(`https://ncdlc.herokuapp.com/api/${type}/${id}`, {
-    inc_votes
-  });
+exports.changeVotes = ({ inc_votes, id, type, body }) => {
+  return axios
+    .patch(`https://ncdlc.herokuapp.com/api/${type}/${id}`, {
+      inc_votes,
+      body
+    })
+    .then(({ data: { comment } }) => {
+      return comment;
+    });
 };
 
 exports.postArticle = (title, author, body, topic) => {
@@ -73,14 +77,14 @@ exports.delete = (type, id) => {
     });
 };
 
-exports.updateTopic = (description, slug) => {
+exports.updateTopics = (description, slug) => {
   return axios
     .post("https://ncdlc.herokuapp.com/api/topics", {
       description,
       slug
     })
-    .then(topic => {
-      console.log(topic);
+    .then(response => {
+      return response;
     });
 };
 
@@ -120,5 +124,13 @@ exports.fetchUserByUserName = username => {
     .get(`https://ncdlc.herokuapp.com/api/users/${username}`)
     .then(({ data: { user } }) => {
       return user;
+    });
+};
+
+exports.fetchCommentsByUserId = username => {
+  return axios
+    .get(`https://ncdlc.herokuapp.com/api/users/${username}/comments`)
+    .then(({ data: { comments } }) => {
+      return comments;
     });
 };

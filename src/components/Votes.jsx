@@ -10,7 +10,12 @@ class Votes extends Component {
       optimisticVotes: currentState.optimisticVotes + +target.name
     }));
     api
-      .changeVotes(target.name, this.props.id, this.props.type)
+      .changeVotes({
+        inc_votes: target.name,
+        id: this.props.id,
+        type: this.props.type,
+        body: this.props.body
+      })
       .catch(({ response }) => {
         this.setState(currentState => {
           return {

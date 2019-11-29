@@ -56,9 +56,7 @@ class AllArticles extends Component {
     this.setState({ order });
   };
   handleToggle = ({ target: { name } }) => {
-    console.log(name);
     this.setState(currentState => {
-      console.log(currentState[name]);
       return { [name]: !currentState[name] };
     });
   };
@@ -71,10 +69,10 @@ class AllArticles extends Component {
       };
     });
   };
-  render() {
+  render(props) {
     const { articles, isLoading, err } = this.state;
     if (isLoading) return <Loader />;
-    if (err) return <ErrHandler />;
+    if (err) return <ErrHandler err={err} />;
     return (
       <main>
         <div className="options">
@@ -108,12 +106,16 @@ class AllArticles extends Component {
               updateArticles={this.updateArticles}
             />
           )}
-          {this.state.added && (
-            <div className="confirmation">Article Added</div>
-          )}
-          {articles.map(article => {
-            return <ArticleCard key={article.article_id} {...article} />;
-          })}
+          {this.props.topic_slug && <h2>{this.props.topic_slug}</h2>}
+          <div className="cardHolder">
+            {this.state.added && (
+              <div className="confirmation">Article Added</div>
+            )}
+
+            {articles.map(article => {
+              return <ArticleCard key={article.article_id} {...article} />;
+            })}
+          </div>
         </div>
       </main>
     );

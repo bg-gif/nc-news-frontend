@@ -29,7 +29,7 @@ class AddUser extends Component {
 
   render() {
     const { err } = this.state;
-    if (err) return <ErrHandler />;
+    if (err) return <ErrHandler err={err} />;
     return (
       <div className="formContainer">
         <h3>Add User</h3>

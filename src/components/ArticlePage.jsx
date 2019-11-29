@@ -28,7 +28,6 @@ class ArticlePage extends Component {
         });
       })
       .catch(({ response }) => {
-        console.log(response);
         this.setState({
           err: [response.data.msg, response.status],
           isLoading: false
@@ -43,32 +42,34 @@ class ArticlePage extends Component {
     if (err) return <ErrHandler err={err} />;
     return (
       <main>
-        <div className="card">
-          <header>
-            <h2>{article.title}</h2>
-          </header>
-          <div className="cardData">
-            <p>{article.body}</p>
-            {this.context.name === article.author && (
-              <button
-                onClick={() => {
-                  api.delete("articles", article.article_id).then(() => {
-                    this.setState({ deleted: true });
-                  });
-                }}
-              >
-                Delete Article
-              </button>
-            )}
+        <div className="cardHolder">
+          <div className="card">
+            <header>
+              <h2>{article.title}</h2>
+            </header>
+            <div className="cardData">
+              <p>{article.body}</p>
+              {this.context.name === article.author && (
+                <button
+                  onClick={() => {
+                    api.delete("articles", article.article_id).then(() => {
+                      this.setState({ deleted: true });
+                    });
+                  }}
+                >
+                  Delete Article
+                </button>
+              )}
+            </div>
+            <Votes
+              id={article.article_id}
+              type="articles"
+              votes={article.votes}
+            />
           </div>
-          <Votes
-            id={article.article_id}
-            type="articles"
-            votes={article.votes}
-          />
-        </div>
 
-        <Comments article_id={article.article_id} />
+          <Comments article_id={article.article_id} />
+        </div>
       </main>
     );
   }

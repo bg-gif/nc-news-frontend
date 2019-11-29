@@ -12,7 +12,7 @@ class AllTopics extends Component {
   render() {
     const { topics } = this.state;
     return (
-      <div>
+      <div className="cardHolder">
         {topics.map(topic => {
           return (
             <Link to={`/topics/${topic.slug}`}>

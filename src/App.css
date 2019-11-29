@@ -30,6 +30,7 @@ header {
   background-color: #b2c2bf;
   color: white;
   padding-bottom: 20px;
+  grid-column: span 3;
 }
 
 header img {
@@ -106,7 +107,12 @@ main {
   padding-right: 5px;
   border-radius: 5px;
 }
-
+.topics select {
+  background-color: #b2c2bf;
+  width: 20vw;
+  text-align: center;
+  min-width: 110px;
+}
 .topicRight {
   display: flex;
   width: fit-content;
@@ -124,6 +130,11 @@ main {
   padding-right: 15px;
   padding-top: 7px;
 }
+.cardHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .card {
   display: grid;
@@ -131,13 +142,17 @@ main {
   border: 2px solid black;
   margin: 5px;
   border-radius: 5px;
+  max-width: 700px;
+  width: 70vw;
+  min-width: 300px;
 }
 .card header {
-  grid-column: span 2;
   margin: 0px;
   border-radius: 0px;
   font-stretch: wider;
   padding: 0;
+  width: 100%;
+  grid-column: span 2;
 }
 .cardData {
   text-align: center;
@@ -149,6 +164,9 @@ main {
   display: float;
   margin: 5px;
   border-radius: 5px;
+  max-width: 700px;
+  min-width: 300px;
+  width: 70vw;
 }
 
 .usercardData {
@@ -201,12 +219,11 @@ button:disabled {
 
 input[type="text"],
 textarea {
-  width: 100%;
+  min-width: 280px;
   padding: 12px;
   border: 1px solid #cccccc;
   border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
+  resize: none;
 }
 .custom-select {
   width: 75%;
@@ -267,4 +284,19 @@ input[type="submit"] {
   justify-content: space-around;
   margin: 5px;
   font-size: 20px;
+}
+
+.errText {
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 5px;
+  max-width: 50 vw;
+  margin: 5px;
+  padding: 40px;
+}
+
+.errHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

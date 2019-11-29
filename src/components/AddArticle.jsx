@@ -8,16 +8,11 @@ class AddArticle extends Component {
   state = { title: "", topic: "", body: "", link: "", err: "", topics: [] };
   componentDidMount() {
     api.fetchAllTopics().then(topics => {
-      this.setState({ topics, topic: topics[0].slug }, () => {
-        console.log(this.state);
-      });
+      this.setState({ topics, topic: topics[0].slug });
     });
   }
   handleChange = ({ target }) => {
-    console.log(target.value);
-    this.setState({ [target.id]: target.value }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();

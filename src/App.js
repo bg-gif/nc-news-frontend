@@ -27,20 +27,14 @@ class App extends Component {
     });
   };
   componentDidMount() {
-    console.log(Boolean(localStorage.loggedIn));
-    this.setState(
-      () => {
-        return {
-          user: {
-            name: localStorage.user,
-            loggedIn: Boolean(localStorage.loggedIn)
-          }
-        };
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+    this.setState(() => {
+      return {
+        user: {
+          name: localStorage.user,
+          loggedIn: Boolean(localStorage.loggedIn)
+        }
+      };
+    });
   }
   render() {
     const { user } = this.state;
@@ -50,7 +44,7 @@ class App extends Component {
           <Header />
           <Nav />
           <UserBar logOut={this.logOut} />
-          <Router>
+          <Router primary={false}>
             <AllArticles path="/" />
             <AllArticles path="/topics/:topic_slug" />
             <ArticlePage path="/articles/:article_id" />
