@@ -60,7 +60,7 @@ class Nav extends Component {
               />
             )}
             <select onClick={this.handleLink}>
-              <option defaultValue disabled>
+              <option selected disabled>
                 Choose Topic
               </option>
               {topics.map(topic => {
