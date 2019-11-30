@@ -28,6 +28,7 @@ class AllArticles extends Component {
   }
 
   getArticles = () => {
+    this.setState({ isLoading: true });
     api
       .fetchAllArticles({
         topic: this.props.topic_slug,
@@ -109,7 +110,11 @@ class AllArticles extends Component {
           {this.props.topic_slug && <h2>{this.props.topic_slug}</h2>}
           <div className="cardHolder">
             {this.state.added && (
-              <div className="confirmation">Article Added</div>
+              <div className="cardHolder">
+                <div className="confirmation">
+                  <p>Article Added</p>
+                </div>
+              </div>
             )}
 
             {articles.map(article => {

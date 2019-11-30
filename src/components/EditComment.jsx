@@ -2,21 +2,23 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import UserContext from "../UserContext";
 import ErrHandler from "./ErrHandler";
+import Loader from "./Loader";
 
 class EditComment extends Component {
   static contextType = UserContext;
-  state = { body: "", err: "" };
+  state = { body: "", err: "", disabled: false, isLoading: false };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { body } = this.state;
+    const { body, isLoading } = this.state;
     const { id, type } = this.props;
+    this.setState({ disabled: true, isLoading: true });
     api
       .changeVotes({ id, body, type })
       .then(comment => {
-        this.setState({ body: "" });
+        this.setState({ body: "", isLoading: false });
         this.props.postEdit(comment);
       })
       .catch(({ response }) => {
@@ -32,8 +34,9 @@ class EditComment extends Component {
   }
 
   render() {
-    const { err } = this.state;
+    const { err, disabled, isLoading } = this.state;
     if (err) return <ErrHandler />;
+    if (isLoading) return <Loader />;
     return (
       <div className="formContainer">
         <h3>Edit Comment</h3>
@@ -55,7 +58,7 @@ class EditComment extends Component {
             </div>
           </div>
           <div className="row">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" disabled={disabled} />
           </div>
         </form>
       </div>

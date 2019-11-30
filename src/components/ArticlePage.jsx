@@ -15,7 +15,8 @@ class ArticlePage extends Component {
     comments: [],
     isLoading: true,
     deleted: false,
-    err: ""
+    err: "",
+    disabled: false
   };
   componentDidMount() {
     api
@@ -36,9 +37,14 @@ class ArticlePage extends Component {
   }
 
   render() {
-    const { article, isLoading, deleted, err } = this.state;
+    const { article, isLoading, deleted, err, disabled } = this.state;
     if (isLoading) return <Loader />;
-    if (deleted) return <div className="confirmation">Article Deleted</div>;
+    if (deleted)
+      return (
+        <div className="cardHolder">
+          <div className="confirmation">Article Deleted</div>
+        </div>
+      );
     if (err) return <ErrHandler err={err} />;
     return (
       <main>
@@ -53,7 +59,9 @@ class ArticlePage extends Component {
             <div className="cardButtons">
               {this.context.name === article.author && (
                 <button
+                  disabled={disabled}
                   onClick={() => {
+                    this.setState({ disabled: true });
                     api.delete("articles", article.article_id).then(() => {
                       this.setState({ deleted: true });
                     });

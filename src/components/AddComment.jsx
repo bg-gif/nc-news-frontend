@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import UserContext from "../UserContext";
 import ErrHandler from "./ErrHandler";
+import Loader from "./Loader";
 
 class AddComment extends Component {
   static contextType = UserContext;
-  state = { body: "", user: this.context.name, err: "" };
+  state = {
+    body: "",
+    user: this.context.name,
+    err: "",
+    disabled: false,
+    isLoading: false
+  };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
@@ -13,10 +20,11 @@ class AddComment extends Component {
     event.preventDefault();
     const { body, user } = this.state;
     const { article_id } = this.props;
+    this.setState({ disabled: true, isLoading: true });
     api
       .postComment(article_id, user, body)
       .then(comment => {
-        this.setState({ body: "" });
+        this.setState({ body: "", isLoading: false });
         this.props.updateComments(comment);
       })
       .catch(({ response }) => {
@@ -28,8 +36,9 @@ class AddComment extends Component {
   };
 
   render() {
-    const { err } = this.state;
+    const { err, disabled, isLoading } = this.state;
     if (err) return <ErrHandler />;
+    if (isLoading) return <Loader />;
     return (
       <div className="formContainer">
         <h3>Add Comment</h3>
@@ -51,7 +60,7 @@ class AddComment extends Component {
             </div>
           </div>
           <div className="row">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" disabled={disabled} />
           </div>
         </form>
       </div>

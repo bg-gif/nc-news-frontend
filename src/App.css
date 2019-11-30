@@ -45,6 +45,7 @@ button {
 
 nav {
   position: sticky;
+  top: 0;
 }
 main {
   display: flex;
@@ -148,6 +149,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: fit-content;
 }
 
 .card {
@@ -174,6 +176,7 @@ main {
   text-align: center;
   padding-left: 20px;
   grid-column: 1/1;
+  min-height: fit-content;
 }
 
 .cardButtons {
@@ -298,7 +301,7 @@ input[type="submit"] {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   margin: 5px;
   font-size: 20px;
   width: 70vw;

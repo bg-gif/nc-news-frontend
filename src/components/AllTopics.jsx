@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
 import { Link } from "@reach/router";
+import Loader from "./Loader";
 
 class AllTopics extends Component {
-  state = { topics: [] };
+  state = { topics: [], isLoading: false };
   componentDidMount() {
+    this.setState({ isLoading: true });
     api.fetchAllTopics().then(topics => {
-      this.setState({ topics });
+      this.setState({ topics, isLoading: false });
     });
   }
   render() {
-    const { topics } = this.state;
+    const { topics, isLoading } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <div className="cardHolder">
         {topics.map(topic => {

@@ -7,7 +7,12 @@ import { Link } from "@reach/router";
 
 class CommentCard extends Component {
   static contextType = UserContext;
-  state = { deleted: false, editToggle: false, comment: {} };
+  state = {
+    deleted: false,
+    editToggle: false,
+    comment: {},
+    deleteDisabled: false
+  };
   handleEdit = () => {
     this.setState(currentState => {
       return { editToggle: !currentState.editToggle };
@@ -28,9 +33,26 @@ class CommentCard extends Component {
   }
 
   render() {
-    const { editToggle, comment } = this.state;
-    if (this.state.deleted)
-      return <div className="confirmation">Comment Deleted</div>;
+    const { editToggle, comment, deleteDisabled, deleted } = this.state;
+    if (deleted)
+      return (
+        <div className="cardHolder">
+          <div className="confirmation">Comment Deleted</div>
+        </div>
+      );
+    if (editToggle)
+      return (
+        <div className="cardHolder">
+          <EditComment
+            body={comment.body}
+            id={comment.comment_id}
+            type="comments"
+            updateComments={this.props.updateComments}
+            postEdit={this.postEdit}
+          />
+        </div>
+      );
+
     return (
       <div className="card">
         <header>
@@ -47,10 +69,12 @@ class CommentCard extends Component {
           {this.context.name === comment.author && (
             <button
               onClick={() => {
+                this.setState({ deleteDisabled: true });
                 api.delete("comments", comment.comment_id).then(() => {
                   this.setState({ deleted: true });
                 });
               }}
+              disabled={deleteDisabled}
             >
               Delete Comment
             </button>
@@ -60,17 +84,6 @@ class CommentCard extends Component {
               Edit Comment
             </button>
           )}
-          <div className="editForm">
-            {editToggle && (
-              <EditComment
-                body={comment.body}
-                id={comment.comment_id}
-                type="comments"
-                updateComments={this.props.updateComments}
-                postEdit={this.postEdit}
-              />
-            )}
-          </div>
         </div>
 
         <Votes

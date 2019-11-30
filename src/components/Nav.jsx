@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 import { Link, navigate } from "@reach/router";
 import AddTopic from "./AddTopic";
 import UserContext from "../UserContext";
+import Loader from "./Loader";
 
 class Nav extends Component {
   static contextType = UserContext;
@@ -17,6 +18,7 @@ class Nav extends Component {
   };
 
   getTopics = () => {
+    this.setState({ isLoading: true });
     api
       .fetchAllTopics()
       .then(topics => {
@@ -45,7 +47,8 @@ class Nav extends Component {
     navigate(`/topics/${event.target.value}`);
   };
   render() {
-    const { topics, toggle } = this.state;
+    const { topics, toggle, isLoading } = this.state;
+    if (isLoading) return <Loader />;
     return (
       <nav>
         <div className="topics-container">
@@ -56,7 +59,7 @@ class Nav extends Component {
                 updateArticles={this.updateArticles}
               />
             )}
-            <select onClick={this.handleLink}>
+            <select>
               <option defaultValue disabled>
                 Choose Topic
               </option>

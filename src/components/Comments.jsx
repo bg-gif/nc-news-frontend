@@ -52,7 +52,11 @@ class Comments extends Component {
         {this.context.name && (
           <button onClick={this.handleToggle}>Add Comment</button>
         )}
-        {this.state.added && <div className="confirmation">Comment Added</div>}
+        {this.state.added && (
+          <div className="cardHolder">
+            <div className="confirmation">Comment Added</div>
+          </div>
+        )}
         {comments.map(comment => {
           return (
             <CommentCard
