@@ -59,7 +59,7 @@ class Nav extends Component {
                 updateArticles={this.updateArticles}
               />
             )}
-            <select>
+            <select onClick={this.handleLink}>
               <option defaultValue disabled>
                 Choose Topic
               </option>

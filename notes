@@ -1,1 +1,3 @@
 article card - article overflows containing box
+comment card too big on wider screen - set to max size same as card
+same thing with comment added card and deleted - so cardHolder element needs tweaking
