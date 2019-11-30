@@ -6,41 +6,60 @@ import Loader from "./Loader";
 
 class AddComment extends Component {
   static contextType = UserContext;
-  state = { description: "", slug: "", err: "", isLoading: false };
+  state = {
+    description: "",
+    slug: "",
+    err: "",
+    isLoading: false,
+    isDisabled: false,
+    isAdded: false
+  };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    const { description, slug } = this.state;
+    let { description, slug } = this.state;
+    slug = slug.toLowerCase();
+    console.log(slug);
     api
       .postTopic(slug, description)
       .then(topic => {
-        this.setState({ description: "", slug: "", isLoading: false }, () => {
-          this.props.updateTopics(topic);
-        });
+        topic = { key: topic.slug, ...topic };
+        this.setState(
+          {
+            description: "",
+            slug: "",
+            isLoading: false,
+            isDisabled: true,
+            isAdded: true
+          },
+          () => {
+            this.props.updateTopics(topic);
+          }
+        );
       })
       .catch(({ response }) => {
         const { msg } = response.data;
         const { status } = response;
 
-        this.setState(
-          {
-            err: [msg, status],
-            isLoading: false
-          },
-          () => {
-            console.log(this.state);
-          }
-        );
+        this.setState({
+          err: [msg, status],
+          isLoading: false
+        });
       });
   };
+  componentDidMount() {
+    this.setState({ isDisabled: false });
+  }
 
   render() {
-    const { err, isLoading } = this.state;
+    const { err, isLoading, isDisabled, isAdded } = this.state;
     if (isLoading) return <Loader />;
     if (err) return <ErrHandler err={err} />;
+    if (isAdded) return <div className="confirmation">Topic Added</div>;
+
     return (
       <div className="formContainer">
         <h3>Add Topic</h3>
@@ -49,6 +68,7 @@ class AddComment extends Component {
             <div className="col-25">
               <label>Topic:</label>
             </div>
+            <br />
             <div className="col-75">
               <textarea
                 name="topic_slug"
@@ -64,6 +84,7 @@ class AddComment extends Component {
             <div className="col-25">
               <label>Description:</label>
             </div>
+            <br />
             <div className="col-75">
               <textarea
                 name="comment-description"
@@ -76,7 +97,7 @@ class AddComment extends Component {
             </div>
           </div>
           <div className="row">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" disabled={isDisabled} />
           </div>
         </form>
       </div>

@@ -74,19 +74,25 @@ class Nav extends Component {
             </select>
           </div>
           <div className="topicRight">
-            <div className="topicItem">
-              <Link to="/users">
-                <p>All Users</p>
-              </Link>
+            <div className="topicButton">
+              <button>
+                <Link to="/users">
+                  <p>All Users</p>
+                </Link>
+              </button>
             </div>
-            <div className="topicItem">
-              <Link to="/topics">
-                <p>All Topics</p>
-              </Link>
+            <div className="topicButton">
+              <button>
+                <Link to="/topics">
+                  <p>All Topics</p>
+                </Link>
+              </button>
             </div>
             {this.context.name && (
-              <div className="topicItem">
-                <p onClick={this.handleToggle}>Add Topic</p>
+              <div className="topicButton">
+                <button>
+                  <p onClick={this.handleToggle}>Add Topic</p>
+                </button>
               </div>
             )}
           </div>

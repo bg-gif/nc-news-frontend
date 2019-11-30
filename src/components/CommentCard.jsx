@@ -42,6 +42,8 @@ class CommentCard extends Component {
 
         <div className="cardData">
           <p> {comment.body}</p>
+        </div>
+        <div className="cardButtons">
           {this.context.name === comment.author && (
             <button
               onClick={() => {

@@ -2,10 +2,19 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import UserContext from "../UserContext";
 import ErrHandler from "./ErrHandler";
+import Loader from "./Loader";
 
 class AddArticle extends Component {
   static contextType = UserContext;
-  state = { title: "", topic: "", body: "", link: "", err: "", topics: [] };
+  state = {
+    title: "",
+    topic: "",
+    body: "",
+    link: "",
+    err: "",
+    topics: [],
+    isLoading: false
+  };
   componentDidMount() {
     api.fetchAllTopics().then(topics => {
       this.setState({ topics, topic: topics[0].slug });
@@ -16,7 +25,8 @@ class AddArticle extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { title, topic, body } = this.state;
+    const { title, topic, body, isLoading } = this.state;
+    this.setState({ isLoading: true });
     api
       .postArticle(title, this.context.name, body, topic)
       .then(article => {
@@ -34,8 +44,9 @@ class AddArticle extends Component {
   };
 
   render() {
-    const { err, topics } = this.state;
+    const { err, topics, isLoading } = this.state;
     if (err) return <ErrHandler err={err} />;
+    if (isLoading) return <Loader />;
     return (
       <div className="formContainer">
         <h3>Add Article</h3>
@@ -60,7 +71,7 @@ class AddArticle extends Component {
             <div className="col-25">
               <label>Topic:</label>
             </div>
-            <div className="custom-select">
+            <div className="col-25">
               <select onChange={this.handleChange} id="topic">
                 {topics.map(topic => {
                   return (

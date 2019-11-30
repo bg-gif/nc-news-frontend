@@ -11,6 +11,7 @@ import { UserProvider } from "./UserContext";
 import Login from "./components/Login";
 import UserBar from "./components/UserBar";
 import AllTopics from "./components/AllTopics";
+import ErrHandler from "./components/ErrHandler";
 
 class App extends Component {
   state = { user: { name: "", loggedIn: false } };
@@ -52,6 +53,7 @@ class App extends Component {
             <UserPage path="/users/:username" />
             <Login path="/login" logIn={this.logIn} />
             <AllTopics path="/topics" />
+            <ErrHandler path="/*" err={["Not Found", 404]} />
           </Router>
         </UserProvider>
       </div>

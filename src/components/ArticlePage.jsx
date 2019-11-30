@@ -49,6 +49,8 @@ class ArticlePage extends Component {
             </header>
             <div className="cardData">
               <p>{article.body}</p>
+            </div>
+            <div className="cardButtons">
               {this.context.name === article.author && (
                 <button
                   onClick={() => {

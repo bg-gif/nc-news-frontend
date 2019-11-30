@@ -14,7 +14,12 @@ const UserCard = ({ username, avatar_url, name }) => {
       </header>
       <div className="usercardData">
         <h1>{name}</h1>
-        {avatar_url && <img src={avatar_url} alt="avatar" />}
+
+        {avatar_url && (
+          <div className="usercardImageholder">
+            <img src={avatar_url} alt="avatar" />{" "}
+          </div>
+        )}
       </div>
     </div>
   );

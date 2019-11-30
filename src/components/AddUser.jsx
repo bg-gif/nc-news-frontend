@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import UserContext from "../UserContext";
 import ErrHandler from "./ErrHandler";
+import Loader from "./Loader";
 
 class AddUser extends Component {
   static contextType = UserContext;
-  state = { username: "", avatar_url: "", name: "", err: "" };
+  state = { username: "", avatar_url: "", name: "", err: "", isLoading: false };
   handleChange = ({ target }) => {
     this.setState({ [target.id]: target.value });
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { username, avatar_url, name } = this.state;
+    const { username, avatar_url, name, isLoading } = this.state;
+    this.setState({ isLoading: true });
     api
       .postUser(username, avatar_url, name)
       .then(user => {
@@ -28,8 +30,9 @@ class AddUser extends Component {
   };
 
   render() {
-    const { err } = this.state;
+    const { err, isLoading } = this.state;
     if (err) return <ErrHandler err={err} />;
+    if (isLoading) return <Loader />;
     return (
       <div className="formContainer">
         <h3>Add User</h3>

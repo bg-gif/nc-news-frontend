@@ -4,6 +4,7 @@ import UserContext from "../UserContext";
 import { Link } from "@reach/router";
 import ErrHandler from "./ErrHandler";
 import AddUser from "./AddUser";
+import Loader from "./Loader";
 
 class Login extends Component {
   static contextType = UserContext;
@@ -11,11 +12,12 @@ class Login extends Component {
     users: [],
     user: "",
     err: "",
-    isLoading: true,
+    isLoading: false,
     toggle: false,
     added: false
   };
   componentDidMount() {
+    this.setState({ isLoading: true });
     api
       .fetchAllUsers()
       .then(users => {
@@ -45,8 +47,9 @@ class Login extends Component {
   };
 
   render() {
-    const { users, user, err } = this.state;
+    const { users, user, err, isLoading } = this.state;
     if (err) return <ErrHandler />;
+    if (isLoading) return <Loader />;
     return (
       <main>
         <div className="login">
@@ -74,7 +77,11 @@ class Login extends Component {
             </div>
           </div>
           {this.state.toggle && <AddUser updateUsers={this.updateUsers} />}
-          {this.state.added && <div className="confirmation">User Added</div>}
+          {this.state.added && (
+            <div className="cardHolder">
+              <div className="confirmation">User Added. Please log in.</div>
+            </div>
+          )}
         </div>
       </main>
     );
