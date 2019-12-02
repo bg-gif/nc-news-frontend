@@ -41,7 +41,7 @@ class ArticlePage extends Component {
     if (isLoading) return <Loader />;
     if (deleted)
       return (
-        <div className="cardHolder">
+        <div className="cardHolderConfirm">
           <div className="confirmation">Article Deleted</div>
         </div>
       );
@@ -56,7 +56,7 @@ class ArticlePage extends Component {
             <div className="cardData">
               <p>{article.body}</p>
             </div>
-            <div className="cardButtons">
+            <div className="cardButtonsDelete">
               {this.context.name === article.author && (
                 <button
                   disabled={disabled}

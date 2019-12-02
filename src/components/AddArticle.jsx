@@ -25,7 +25,7 @@ class AddArticle extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { title, topic, body, isLoading } = this.state;
+    const { title, topic, body } = this.state;
     this.setState({ isLoading: true });
     api
       .postArticle(title, this.context.name, body, topic)

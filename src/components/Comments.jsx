@@ -53,7 +53,7 @@ class Comments extends Component {
           <button onClick={this.handleToggle}>Add Comment</button>
         )}
         {this.state.added && (
-          <div className="cardHolder">
+          <div className="cardHolderConfirm">
             <div className="confirmation">Comment Added</div>
           </div>
         )}

@@ -39,9 +39,11 @@ class AllArticles extends Component {
         this.setState({ articles, isLoading: false, user: this.context.name });
       })
       .catch(({ response }) => {
-        this.setState({
-          err: [response.data.msg, response.status],
-          isLoading: false
+        this.setState(currentState => {
+          return {
+            err: [response.data.msg, response.status],
+            isLoading: false
+          };
         });
       });
   };

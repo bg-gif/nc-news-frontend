@@ -36,7 +36,7 @@ class CommentCard extends Component {
     const { editToggle, comment, deleteDisabled, deleted } = this.state;
     if (deleted)
       return (
-        <div className="cardHolder">
+        <div className="cardHolderConfirm">
           <div className="confirmation">Comment Deleted</div>
         </div>
       );

@@ -22,7 +22,6 @@ class AddComment extends Component {
     this.setState({ isLoading: true });
     let { description, slug } = this.state;
     slug = slug.toLowerCase();
-    console.log(slug);
     api
       .postTopic(slug, description)
       .then(topic => {
@@ -61,45 +60,47 @@ class AddComment extends Component {
     if (isAdded) return <div className="confirmation">Topic Added</div>;
 
     return (
-      <div className="formContainer">
-        <h3>Add Topic</h3>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="col-25">
-              <label>Topic:</label>
+      <div className="cardHolder">
+        <div className="formContainer">
+          <h3>Add Topic</h3>
+          <form onSubmit={this.handleSubmit}>
+            <div className="row">
+              <div className="col-25">
+                <label>Topic:</label>
+              </div>
+              <br />
+              <div className="col-75">
+                <textarea
+                  name="topic_slug"
+                  id="slug"
+                  placeholder="Topic Name"
+                  onChange={this.handleChange}
+                  value={this.state.slug}
+                  required
+                ></textarea>
+              </div>
             </div>
-            <br />
-            <div className="col-75">
-              <textarea
-                name="topic_slug"
-                id="slug"
-                placeholder="Topic Name"
-                onChange={this.handleChange}
-                value={this.state.slug}
-                required
-              ></textarea>
+            <div className="row">
+              <div className="col-25">
+                <label>Description:</label>
+              </div>
+              <br />
+              <div className="col-75">
+                <textarea
+                  name="comment-description"
+                  id="description"
+                  placeholder="Topic Description"
+                  onChange={this.handleChange}
+                  value={this.state.description}
+                  required
+                ></textarea>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-25">
-              <label>Description:</label>
+            <div className="row">
+              <input type="submit" value="Submit" disabled={isDisabled} />
             </div>
-            <br />
-            <div className="col-75">
-              <textarea
-                name="comment-description"
-                id="description"
-                placeholder="Topic Description"
-                onChange={this.handleChange}
-                value={this.state.description}
-                required
-              ></textarea>
-            </div>
-          </div>
-          <div className="row">
-            <input type="submit" value="Submit" disabled={isDisabled} />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }

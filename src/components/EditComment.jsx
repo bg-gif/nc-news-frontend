@@ -12,7 +12,7 @@ class EditComment extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { body, isLoading } = this.state;
+    const { body } = this.state;
     const { id, type } = this.props;
     this.setState({ disabled: true, isLoading: true });
     api

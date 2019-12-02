@@ -12,9 +12,10 @@ import Login from "./components/Login";
 import UserBar from "./components/UserBar";
 import AllTopics from "./components/AllTopics";
 import ErrHandler from "./components/ErrHandler";
+import { navigate } from "@reach/router";
 
 class App extends Component {
-  state = { user: { name: "", loggedIn: false } };
+  state = { user: { name: "", loggedIn: false, refresh: false } };
   logIn = ({ target: { value } }) => {
     this.setState({ user: { name: value, loggedIn: true } }, () => {
       localStorage.setItem("user", this.state.user.name);
@@ -23,6 +24,7 @@ class App extends Component {
   };
   logOut = () => {
     this.setState({ user: { name: "", loggedIn: "" } }, () => {
+      navigate("/");
       localStorage.setItem("user", this.state.user.name);
       localStorage.setItem("loggedIn", this.state.user.loggedIn);
     });
@@ -37,13 +39,14 @@ class App extends Component {
       };
     });
   }
+
   render() {
-    const { user } = this.state;
+    const { user, refresh } = this.state;
     return (
       <div className="App">
         <UserProvider value={user}>
           <Header />
-          <Nav />
+          <Nav refresh={refresh} />
           <UserBar logOut={this.logOut} />
           <Router primary={false}>
             <AllArticles path="/" />

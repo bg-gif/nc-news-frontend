@@ -12,7 +12,7 @@ class AddUser extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const { username, avatar_url, name, isLoading } = this.state;
+    const { username, avatar_url, name } = this.state;
     this.setState({ isLoading: true });
     api
       .postUser(username, avatar_url, name)

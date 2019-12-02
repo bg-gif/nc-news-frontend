@@ -7,9 +7,17 @@ import Loader from "./Loader";
 
 class Nav extends Component {
   static contextType = UserContext;
-  state = { topics: [], toggle: false, isLoading: true, err: "" };
+  state = {
+    topics: [],
+    toggle: false,
+    isLoading: true,
+    err: ""
+  };
   componentDidMount() {
     this.getTopics();
+  }
+  componentDidUpdate(prevProps) {
+    console.dir(prevProps, this.props);
   }
   topicUpdate = topic => {
     this.setState(currentState => {
@@ -44,7 +52,8 @@ class Nav extends Component {
     });
   };
   handleLink = event => {
-    navigate(`/topics/${event.target.value}`);
+    if (event.target.value === "Home") navigate(`/`);
+    else navigate(`/topics/${event.target.value}`);
   };
   render() {
     const { topics, toggle, isLoading } = this.state;
@@ -60,9 +69,7 @@ class Nav extends Component {
               />
             )}
             <select onClick={this.handleLink}>
-              <option selected disabled>
-                Choose Topic
-              </option>
+              <option>Home</option>
               {topics.map(topic => {
                 return (
                   <option
